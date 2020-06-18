@@ -16,6 +16,20 @@ TEST(StrCmpTest, EmptyStringsShouldReturnZero) {
   ASSERT_EQ(result, 0);
 }
 
+TEST(StrCmpTest, EmptyStringShouldNotEqualNonEmptyString) {
+  const char *empty = "";
+  const char *s2 = "abc";
+  int result = __llvm_libc::strcmp(empty, s2);
+  // This should be '\0' - 'a' = -97
+  ASSERT_EQ(result, -97);
+  
+  // Similar case if empty string is second argument.
+  const char *s3 = "123";
+  result = __llvm_libc::strcmp(s3, empty);
+  // This should be '1' - '\0' = 49
+  ASSERT_EQ(result, 49);
+}
+
 TEST(StrCmpTest, EqualStringsShouldReturnZero) {
   const char *s1 = "abc";
   const char *s2 = "abc";
@@ -24,10 +38,10 @@ TEST(StrCmpTest, EqualStringsShouldReturnZero) {
 }
 
 TEST(StrCmpTest, ShouldReturnResultOfFirstDifference) {
-  const char *s1 = "aaaB42";
-  const char *s2 = "aaaC55";
+  const char *s1 = "___B42__";
+  const char *s2 = "___C55__";
   const int result = __llvm_libc::strcmp(s1, s2);
-  // This should return 'C' - 'B', which is equal to -1.
+  // This should return 'B' - 'C' = -1.
   ASSERT_EQ(result, -1);
 }
 
@@ -35,7 +49,7 @@ TEST(StrCmpTest, CapitalizedLetterShouldNotBeEqual) {
   const char *s1 = "abcd";
   const char *s2 = "abCd";
   const int result = __llvm_libc::strcmp(s1, s2);
-  // 'c' - 'C' is equal to 32.
+  // 'c' - 'C' = 32.
   ASSERT_EQ(result, 32);
 }
 
@@ -43,18 +57,18 @@ TEST(StrCmpTest, UnequalLengthStringsShouldNotReturnZero) {
   const char *s1 = "abc";
   const char *s2 = "abcd";
   const int result = __llvm_libc::strcmp(s1, s2);
-  // '\0' - 'd' is equal to -100.
+  // '\0' - 'd' = -100.
   ASSERT_EQ(result, -100);
 }
 
-TEST(StrCmpTest, OrderingSwapChangesSign) {
+TEST(StrCmpTest, StringArgumentSwapChangesSign) {
   const char *a = "a";
   const char *b = "b";
   int result = __llvm_libc::strcmp(b, a);
-  // 'b' - 'a' is equal to 1.
+  // 'b' - 'a' = 1.
   ASSERT_EQ(result, 1);
 
   result = __llvm_libc::strcmp(a, b);
-  // 'a' - 'b' is equal to -1.
+  // 'a' - 'b' = -1.
   ASSERT_EQ(result, -1);
 }
