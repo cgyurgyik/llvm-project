@@ -10,29 +10,29 @@
 #include "utils/UnitTest/Test.h"
 
 TEST(StrCmpTest, EmptyStringsShouldReturnZero) {
-  const char *s1 = "";
-  const char *s2 = "";
+  const char* s1 = "";
+  const char* s2 = "";
   const int result = __llvm_libc::strcmp(s1, s2);
   ASSERT_EQ(result, 0);
 }
 
 TEST(StrCmpTest, EmptyStringShouldNotEqualNonEmptyString) {
-  const char *empty = "";
-  const char *s2 = "abc";
+  const char* empty = "";
+  const char* s2 = "abc";
   int result = __llvm_libc::strcmp(empty, s2);
   // This should be '\0' - 'a' = -97
   ASSERT_EQ(result, -97);
   
   // Similar case if empty string is second argument.
-  const char *s3 = "123";
+  const char* s3 = "123";
   result = __llvm_libc::strcmp(s3, empty);
   // This should be '1' - '\0' = 49
   ASSERT_EQ(result, 49);
 }
 
 TEST(StrCmpTest, EqualStringsShouldReturnZero) {
-  const char *s1 = "abc";
-  const char *s2 = "abc";
+  const char* s1 = "abc";
+  const char* s2 = "abc";
   const int result = __llvm_libc::strcmp(s1, s2);
   ASSERT_EQ(result, 0);
 }
@@ -62,8 +62,8 @@ TEST(StrCmpTest, UnequalLengthStringsShouldNotReturnZero) {
 }
 
 TEST(StrCmpTest, StringArgumentSwapChangesSign) {
-  const char *a = "a";
-  const char *b = "b";
+  const char* a = "a";
+  const char* b = "b";
   int result = __llvm_libc::strcmp(b, a);
   // 'b' - 'a' = 1.
   ASSERT_EQ(result, 1);
@@ -72,3 +72,4 @@ TEST(StrCmpTest, StringArgumentSwapChangesSign) {
   // 'a' - 'b' = -1.
   ASSERT_EQ(result, -1);
 }
+
