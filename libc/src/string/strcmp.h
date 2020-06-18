@@ -17,4 +17,4 @@ int strcmp(const char *l, const char *r);
 
 } // namespace __llvm_libc
 
-#endif // LLVM_LIBC_SRC_STRING_STRCMP_H
+#endif // LLVM_LIBC_SRC_STRING_STRCMP_H 
