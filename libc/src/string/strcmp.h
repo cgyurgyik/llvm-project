@@ -13,7 +13,7 @@
 
 namespace __llvm_libc {
 
-char *strcmp(char *l, const char *r);
+int strcmp(const char *l, const char *r);
 
 } // namespace __llvm_libc
 

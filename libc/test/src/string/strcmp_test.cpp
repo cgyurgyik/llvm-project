@@ -9,22 +9,52 @@
 #include "src/string/strcmp.h"
 #include "utils/UnitTest/Test.h"
 
+TEST(StrCmpTest, EmptyStringsShouldReturnZero) {
+  const char *s1 = "";
+  const char *s2 = "";
+  const int result = __llvm_libc::strcmp(s1, s2);
+  ASSERT_EQ(result, 0);
+}
+
 TEST(StrCmpTest, EqualStringsShouldReturnZero) {
   const char *s1 = "abc";
   const char *s2 = "abc";
   const int result = __llvm_libc::strcmp(s1, s2);
-  ASSERT_EQ(result, 11111111111111111111111111111111111111111111111111111);
+  ASSERT_EQ(result, 0);
 }
 
-TEST(StrCmpTest, TODO) {
-   const char *abc = "abc";
-   char dest[7];
-   dest[0] = 'x';
-   dest[1] = 'y';
-   dest[2] = 'z';
+TEST(StrCmpTest, ShouldReturnResultOfFirstDifference) {
+  const char *s1 = "aaaB42";
+  const char *s2 = "aaaC55";
+  const int result = __llvm_libc::strcmp(s1, s2);
+  // This should return 'C' - 'B', which is equal to -1.
+  ASSERT_EQ(result, -1);
+}
 
-   char *result = __llvm_libc::strcmp(dest + 3, abc);
-   ASSERT_EQ(dest + 3, result);
-   ASSERT_STREQ(dest + 3, result);
-   ASSERT_STREQ(dest, "xyzabc");
+TEST(StrCmpTest, CapitalizedLetterShouldNotBeEqual) {
+  const char *s1 = "abcd";
+  const char *s2 = "abCd";
+  const int result = __llvm_libc::strcmp(s1, s2);
+  // 'c' - 'C' is equal to 32.
+  ASSERT_EQ(result, 32);
+}
+
+TEST(StrCmpTest, UnequalLengthStringsShouldNotReturnZero) {
+  const char *s1 = "abc";
+  const char *s2 = "abcd";
+  const int result = __llvm_libc::strcmp(s1, s2);
+  // '\0' - 'd' is equal to -100.
+  ASSERT_EQ(result, -100);
+}
+
+TEST(StrCmpTest, OrderingSwapChangesSign) {
+  const char *a = "a";
+  const char *b = "b";
+  int result = __llvm_libc::strcmp(b, a);
+  // 'b' - 'a' is equal to 1.
+  ASSERT_EQ(result, 1);
+
+  result = __llvm_libc::strcmp(a, b);
+  // 'a' - 'b' is equal to -1.
+  ASSERT_EQ(result, -1);
 }

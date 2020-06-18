@@ -12,7 +12,7 @@
 
 namespace __llvm_libc {
 
-char *LLVM_LIBC_ENTRYPOINT(strcmp)(char *l, const char *r) {
+int LLVM_LIBC_ENTRYPOINT(strcmp)(const char *l, const char *r) {
   while (*l) {
     if (*l != *r) break;
     ++l;
