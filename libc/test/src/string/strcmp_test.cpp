@@ -16,7 +16,6 @@ TEST(StrCmpTest, EmptyStringsShouldReturnZero) {
   ASSERT_EQ(result, 0);
 }
 
-<<<<<<< HEAD
 TEST(StrCmpTest, EmptyStringShouldNotEqualNonEmptyString) {
   const char *empty = "";
   const char *s2 = "abc";
@@ -31,8 +30,6 @@ TEST(StrCmpTest, EmptyStringShouldNotEqualNonEmptyString) {
   ASSERT_EQ(result, 49);
 }
 
-=======
->>>>>>> 3e77db0445101d39c49274da6c375b8792e510b9
 TEST(StrCmpTest, EqualStringsShouldReturnZero) {
   const char *s1 = "abc";
   const char *s2 = "abc";
@@ -41,37 +38,22 @@ TEST(StrCmpTest, EqualStringsShouldReturnZero) {
 }
 
 TEST(StrCmpTest, ShouldReturnResultOfFirstDifference) {
-<<<<<<< HEAD
   const char *s1 = "___B42__";
   const char *s2 = "___C55__";
   const int result = __llvm_libc::strcmp(s1, s2);
   // This should return 'B' - 'C' = -1.
-=======
-  const char *s1 = "aaaB42";
-  const char *s2 = "aaaC55";
-  const int result = __llvm_libc::strcmp(s1, s2);
-  // This should return 'C' - 'B', which is equal to -1.
->>>>>>> 3e77db0445101d39c49274da6c375b8792e510b9
   ASSERT_EQ(result, -1);
 }
 
 TEST(StrCmpTest, CapitalizedLetterShouldNotBeEqual) {
-<<<<<<< HEAD
   const char *s1 = "abcd";
   const char *s2 = "abCd";
   const int result = __llvm_libc::strcmp(s1, s2);
   // 'c' - 'C' = 32.
-=======
-  const char *s1 = "abcd";
-  const char *s2 = "abCd";
-  const int result = __llvm_libc::strcmp(s1, s2);
-  // 'c' - 'C' is equal to 32.
->>>>>>> 3e77db0445101d39c49274da6c375b8792e510b9
   ASSERT_EQ(result, 32);
 }
 
 TEST(StrCmpTest, UnequalLengthStringsShouldNotReturnZero) {
-<<<<<<< HEAD
   const char *s1 = "abc";
   const char *s2 = "abcd";
   const int result = __llvm_libc::strcmp(s1, s2);
@@ -88,23 +70,5 @@ TEST(StrCmpTest, StringArgumentSwapChangesSign) {
 
   result = __llvm_libc::strcmp(a, b);
   // 'a' - 'b' = -1.
-=======
-  const char *s1 = "abc";
-  const char *s2 = "abcd";
-  const int result = __llvm_libc::strcmp(s1, s2);
-  // '\0' - 'd' is equal to -100.
-  ASSERT_EQ(result, -100);
-}
-
-TEST(StrCmpTest, OrderingSwapChangesSign) {
-  const char *a = "a";
-  const char *b = "b";
-  int result = __llvm_libc::strcmp(b, a);
-  // 'b' - 'a' is equal to 1.
-  ASSERT_EQ(result, 1);
-
-  result = __llvm_libc::strcmp(a, b);
-  // 'a' - 'b' is equal to -1.
->>>>>>> 3e77db0445101d39c49274da6c375b8792e510b9
   ASSERT_EQ(result, -1);
 }
