@@ -9,11 +9,9 @@
 #ifndef LLVM_LIBC_SRC_STRING_STRCMP_H
 #define LLVM_LIBC_SRC_STRING_STRCMP_H
 
-#include "include/string.h"
-
 namespace __llvm_libc {
 
-int strcmp(const char *l, const char *r);
+int strcmp(const char *left, const char *right);
 
 } // namespace __llvm_libc
 
