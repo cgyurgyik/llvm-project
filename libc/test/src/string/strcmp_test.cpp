@@ -12,7 +12,11 @@
 TEST(StrCmpTest, EmptyStringsShouldReturnZero) {
   const char *s1 = "";
   const char *s2 = "";
-  const int result = __llvm_libc::strcmp(s1, s2);
+  int result = __llvm_libc::strcmp(s1, s2);
+  ASSERT_EQ(result, 0);
+
+  // Verify operands reversed.
+  result = __llvm_libc::strcmp(s2, s1);
   ASSERT_EQ(result, 0);
 }
 
@@ -33,32 +37,51 @@ TEST(StrCmpTest, EmptyStringShouldNotEqualNonEmptyString) {
 TEST(StrCmpTest, EqualStringsShouldReturnZero) {
   const char *s1 = "abc";
   const char *s2 = "abc";
-  const int result = __llvm_libc::strcmp(s1, s2);
+  int result = __llvm_libc::strcmp(s1, s2);
+  ASSERT_EQ(result, 0);
+
+  // Verify operands reversed.
+  result = __llvm_libc::strcmp(s2, s1);
   ASSERT_EQ(result, 0);
 }
 
 TEST(StrCmpTest, ShouldReturnResultOfFirstDifference) {
   const char *s1 = "___B42__";
   const char *s2 = "___C55__";
-  const int result = __llvm_libc::strcmp(s1, s2);
+  int result = __llvm_libc::strcmp(s1, s2);
   // This should return 'B' - 'C' = -1.
   ASSERT_EQ(result, -1);
+
+  // Verify operands reversed.
+  result = __llvm_libc::strcmp(s2, s1);
+  // This should return 'C' - 'B' = 1.
+  ASSERT_EQ(result, 1);
 }
 
 TEST(StrCmpTest, CapitalizedLetterShouldNotBeEqual) {
   const char *s1 = "abcd";
   const char *s2 = "abCd";
-  const int result = __llvm_libc::strcmp(s1, s2);
+  int result = __llvm_libc::strcmp(s1, s2);
   // 'c' - 'C' = 32.
   ASSERT_EQ(result, 32);
+
+  // Verify operands reversed.
+  result = __llvm_libc::strcmp(s2, s1);
+  // 'C' - 'c' = -32.
+  ASSERT_EQ(result, -32);
 }
 
 TEST(StrCmpTest, UnequalLengthStringsShouldNotReturnZero) {
   const char *s1 = "abc";
   const char *s2 = "abcd";
-  const int result = __llvm_libc::strcmp(s1, s2);
+  int result = __llvm_libc::strcmp(s1, s2);
   // '\0' - 'd' = -100.
   ASSERT_EQ(result, -100);
+
+  // Verify operands reversed.
+  result = __llvm_libc::strcmp(s2, s1);
+  // 'd' - '\0' = 100.
+  ASSERT_EQ(result, 100);
 }
 
 TEST(StrCmpTest, StringArgumentSwapChangesSign) {

@@ -12,14 +12,12 @@
 
 namespace __llvm_libc {
 
-int LLVM_LIBC_ENTRYPOINT(strcmp)(const char *l, const char *r) {
-  while (*l) {
-    if (*l != *r)
-      break;
-    ++l;
-    ++r;
-  }
-  return *(const unsigned char *)l - *(const unsigned char *)r;
+// TODO: Look at benefits for comparing words at a time.
+int LLVM_LIBC_ENTRYPOINT(strcmp)(const char *left, const char *right) {
+  for (; *left && *left == *right; ++left, ++right)
+    ;
+  return *reinterpret_cast<const unsigned char *>(left) -
+         *reinterpret_cast<const unsigned char *>(right);
 }
 
 } // namespace __llvm_libc
